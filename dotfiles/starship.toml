@@ -1,0 +1,133 @@
+format = """
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$python\
+$lua\
+$nodejs\
+$golang\
+$haskell\
+$rust\
+$ruby\
+$aws\
+$docker_context\
+$jobs\
+$cmd_duration\
+$line_break\
+$character"""
+
+add_newline = true
+palette = "dracula"
+
+[directory]
+style = 'bold fg:dark_blue'
+format = '[$path ]($style)'
+truncation_length = 0
+truncation_symbol = '…/'
+truncate_to_repo = false
+
+[directory.substitutions]
+'Documents' = '󰈙'
+'Downloads' = ' '
+'Music' = ' '
+'Pictures' = ' '
+
+[git_branch]
+style = 'fg:green'
+symbol = ' '
+format = '[on](white) [$symbol$branch ]($style)'
+
+[git_status]
+conflicted = " 🚨"
+ahead = " 🚀"
+behind = "🐌"
+diverged = "🛤️ "
+# up_to_date = "👌"
+# untracked = "🕵️‍♂️"
+untracked = "🔍"
+stashed = "🥷 "
+modified = "📝 "
+# staged.value = "++"
+# staged.style = "green"
+# staged_count.enabled = true
+# staged_count.style = "green"
+renamed = "🪄 "
+deleted = "🗑️ "
+# format = '([\[$all_status$ahead_behind\]](204) )'
+style = 'fg:red'
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[fill]
+symbol = ' '
+
+[python]
+style = 'teal'
+symbol = ' '
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+pyenv_version_name = true
+pyenv_prefix = ''
+
+[lua]
+format = '[$symbol($version )]($style)'
+symbol = ' '
+
+[nodejs]
+style = 'green'
+symbol = ' '
+
+[golang]
+style = 'blue'
+symbol = ' '
+
+[haskell]
+style = 'blue'
+symbol = ' '
+
+[rust]
+style = 'orange'
+symbol = ' '
+
+[ruby]
+style = 'blue'
+symbol = ' '
+
+[package]
+symbol = '󰏗 '
+
+[aws]
+symbol = ' '
+style = 'yellow'
+format = '[$symbol($profile )(\[$duration\] )]($style)'
+
+[docker_context]
+symbol = ' '
+style = 'fg:#06969A'
+format = '[$symbol]($style) $path'
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+detect_extensions = ['Dockerfile']
+
+[jobs]
+symbol = ' '
+style = 'red'
+number_threshold = 1
+format = '[$symbol]($style)'
+
+[cmd_duration]
+min_time = 500
+style = 'fg:gray'
+format = '[$duration]($style)'
+
+[palettes.dracula]
+dark_blue='#6272a4'
+blue='#8be9fd'
+teal = '#88C0D0'
+red='#ff5555'
+green='#50fa7b'
+purple='#bd93f9'
+cyan='#8be9fd'
+orange='#ffb86c'
+yellow='#f1fa8c'
+gray='#44475a'
+white='#f8f8f2'
+black='#282a36'

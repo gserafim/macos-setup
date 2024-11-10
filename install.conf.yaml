@@ -1,0 +1,62 @@
+- defaults:
+    link:
+      relink: true
+
+- shell:
+    - command: cd ~ && rm -rf
+        .zshrc
+        .gitconfig
+        .config/starship.toml
+        .config/bat/config
+        .fzf
+        .aliases.sh
+        .exports.sh
+        .functions.sh
+      stdout: true
+      stderr: true
+
+    - command: chmod +x macos/*
+      stdout: true
+      stderr: true
+
+    - command: macos/install.sh
+      stdout: true
+      stderr: true
+
+    - command: chmod +x scripts/*
+      stdout: true
+      stderr: true
+
+    - command: scripts/brew.sh
+      stdout: true
+      stderr: true
+
+    - command: scripts/ohmyzsh.sh
+      stdout: true
+      stderr: true
+
+    - command: scripts/appsConfig.sh
+      stdout: true
+      stderr: false
+
+    - command: scripts/ssh.sh
+      stdout: true
+      stderr: true
+
+    - command: scripts/fzf-git.sh
+      stdout: true
+      stderr: true
+
+- clean: ["~"]
+
+- link:
+    ~/.zshrc: dotfiles/zshrc.sh
+    ~/.config/starship.toml: dotfiles/starship.toml
+    ~/.fzf: dotfiles/fzf.sh
+    ~/.gitconfig: dotfiles/gitconfig
+    ~/.aliases.sh: dotfiles/aliases.sh
+    ~/.exports.sh: dotfiles/exports.sh
+    ~/.functions.sh: dotfiles/functions.sh
+
+- create:
+    - ~/Documents/workspace

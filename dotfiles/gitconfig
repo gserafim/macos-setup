@@ -1,0 +1,37 @@
+[user]
+	name = Gustavo Serafim
+	email = 3651091+gserafim@users.noreply.github.com
+
+[pull]
+	rebase = true
+
+[init]
+	defaultBranch = main
+
+[pager]
+	log = false
+	status = false
+	# diff = false
+	branch = false
+
+[core]
+	editor = code --wait
+	pager = delta
+	
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	side-by-side = true
+	
+	# delta detects terminal colors automatically; set one of these to disable auto-detection
+	# dark = true
+	#light = true	
+	
+[merge]
+	conflictStyle = diff3
+
+[diff]
+	colorMoved = default
+	
