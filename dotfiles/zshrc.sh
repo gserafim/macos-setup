@@ -15,9 +15,6 @@ source $HOME/.functions.sh
 
 source $HOME/.fzf
 
-#Clean up the history file - Run only once a day to avoid slowing down shell startup
-history_cleanup
-
 # Set the theme
 ZSH_THEME="robbyrussell"
 
@@ -37,12 +34,18 @@ eval "$(fzf --zsh)"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+HISTSIZE=5000
 HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+SAVEHIST=$HISTSIZE
+HISTDUPE=erase
+setopt append_history
 setopt share_history
-setopt hist_expire_dups_first
+setopt hist_ignore_space
 setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_find_no_dups
+setopt hist_expire_dups_first
 setopt hist_verify
 
 # completion using arrow keys (based on history)
