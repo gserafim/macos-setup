@@ -1,54 +1,66 @@
-tap "homebrew/bundle"
-tap "homebrew/services"
-brew "bat"
-brew "blueutil"
-brew "python@3.12"
-brew "eza"
-brew "fd"
-brew "tesseract"
-brew "ffmpeg"
-brew "fzf"
-brew "gh"
-brew "git"
-brew "git-delta"
-brew "imagemagick"
-brew "jq"
-brew "k6"
-brew "mas"
-brew "node"
-brew "postgresql@14", restart_service: true
-brew "prettier"
-brew "pyenv"
-brew "raylib"
-brew "starship"
-brew "tlrc"
-brew "tokei"
-brew "tree"
-brew "yarn"
-brew "zoxide"
-cask "alfred"
-cask "alt-tab"
-cask "appcleaner"
-cask "audacity"
-cask "betterdisplay"
-cask "docker"
-cask "dozer"
-cask "firefox"
-cask "font-fira-code-nerd-font"
-cask "font-fira-mono-nerd-font"
-cask "font-hack-nerd-font"
-cask "font-jetbrains-mono-nerd-font"
-cask "forklift"
-cask "google-chrome"
-cask "iterm2"
-cask "itsycal"
-cask "keepingyouawake"
-cask "keka"
-cask "postman"
-cask "rectangle"
-cask "stats"
-cask "visual-studio-code"
-cask "vivaldi"
-cask "vlc"
-cask "zoom"
-mas "Xcode", id: 497799835
+# Work machine setup, installed by ./install.sh (step "brew").
+# Personal apps are left out on purpose: install those by hand.
+
+# Terminal (the dotfiles depend on these)
+brew "bat"                       # cat with syntax highlighting (cat alias, man pages, fzf preview)
+brew "blueutil"                  # Bluetooth on/off (btr alias)
+brew "eza"                       # ls replacement (ls aliases, fzf preview)
+brew "fd"                        # find replacement (fzf file search)
+brew "fzf"                       # fuzzy finder
+brew "git"                       # version control
+brew "git-delta"                 # pager for git diffs (set in gitconfig)
+brew "ripgrep"                   # fast grep (search function)
+brew "starship"                  # prompt
+brew "tokei"                     # counts lines of code (tokei alias)
+brew "zoxide"                    # smarter cd
+cask "font-fira-code-nerd-font"  # VS Code font
+cask "ghostty"                   # terminal
+cask "visual-studio-code"        # editor ($EDITOR and git editor)
+
+# Development
+brew "duckdb"                    # SQL OLAP database
+brew "ffmpeg"                    # speeds up and shrinks bug report videos
+brew "gh"                        # GitHub CLI
+brew "go"                        # Go
+brew "gopls"                     # Go language server
+brew "jj"                        # Git-compatible version control
+brew "jq"                        # JSON processor
+brew "k6"                        # load testing
+brew "lazydocker"                # Docker TUI
+brew "neovim"                    # editor
+brew "nmap"                      # network scanner
+brew "nvm"                       # Node.js versions
+brew "pandoc"                    # document converter
+brew "parallel"                  # runs commands in parallel
+brew "postgresql@14", restart_service: :changed  # database (starts when installed)
+brew "prettier"                  # code formatter
+brew "tlrc"                      # tldr pages
+brew "tmux"                      # terminal multiplexer
+brew "tree"                      # directory tree
+brew "wget"                      # downloads files
+brew "xmlstarlet"                # XML on the command line
+cask "dbeaver-community"         # database client
+cask "docker-desktop"            # Docker
+cask "postman"                   # API client
+
+# Utilities
+brew "ical-buddy"                # calendar events in the terminal
+brew "imagemagick"               # image conversion
+brew "poppler"                   # PDF tools (pdftotext, used by ripgrep-all)
+brew "rclone"                    # syncs with cloud storage
+brew "ripgrep-all"               # ripgrep inside PDFs, documents and archives
+brew "tesseract"                 # OCR
+
+# Apps
+cask "1password"                 # password manager
+cask "alfred"                    # launcher
+cask "alt-tab"                   # Windows-like alt-tab
+cask "appcleaner"                # uninstalls apps with their leftovers
+cask "betterdisplay"             # display settings
+cask "firefox"                   # browser
+cask "forklift"                  # file manager with SFTP/S3
+cask "google-chrome"             # browser
+cask "itsycal"                   # menu bar calendar
+cask "keepingyouawake"           # prevents sleep
+cask "keka"                      # archiver
+cask "loop"                      # window manager

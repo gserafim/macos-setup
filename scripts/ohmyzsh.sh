@@ -1,66 +1,40 @@
 #!/usr/bin/env bash
 
+# Installs Oh My Zsh and the plugins used in dotfiles/zshrc.sh
+
+set -euo pipefail
+
 # Source utilities
-source "$(dirname "${BASH_SOURCE[0]}")/../utils/colors.sh"
-source "$(dirname "${BASH_SOURCE[0]}")/../utils/header.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/../utils/common.sh"
 
 # Generate header
 generate_header "⬛ Installing Oh My Zsh"
 
-# Set ZSH custom directory
-export ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+OMZ_DIR="$HOME/.oh-my-zsh"
+PLUGINS_DIR="$OMZ_DIR/custom/plugins"
 
-# Helper functions
-fail() {
-  echo "${RED}ERROR: $1${RESET}"
-  exit 1
-}
-
-message() {
-  printf "%b\n" "${RESET}${BOLD}$1${RESET}"
-}
-
-# Install Oh My Zsh
-if [ -d ~/.oh-my-zsh ]; then
+# Install Oh My Zsh with git: the official installer would replace ~/.zshrc with its template
+if [ -f "$OMZ_DIR/oh-my-zsh.sh" ]; then
   message "${CYAN}✅ oh-my-zsh is installed${RESET}"
+elif [ -e "$OMZ_DIR" ]; then
+  fail "$OMZ_DIR exists but isn't a complete Oh My Zsh install. Remove it and run this step again"
 else
   message "${GREEN}🏁 Installing oh-my-zsh${RESET}"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" ||
+  git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "$OMZ_DIR" ||
     fail "Couldn't install oh-my-zsh"
 fi
-
-# Set permissions
-message "${CYAN}🔑 Setting permissions on .oh-my-zsh/plugins/ folder${RESET}"
-chmod +x ~/.oh-my-zsh/custom/*
 
 # Install plugins
 message "${CYAN}👀 Checking Plugins${RESET}"
 
-# Install zsh-autosuggestions
-if [ -d "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-autosuggestions" ]; then
-  message "${CYAN}✅ zsh-autosuggestions is installed${RESET}"
-else
-  message "${GREEN}🏁 Installing zsh-autosuggestions${RESET}"
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-autosuggestions" ||
-    fail "Couldn't install zsh-autosuggestions"
-fi
-
-# Install zsh-syntax-highlighting
-if [ -d "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-syntax-highlighting" ]; then
-  message "${CYAN}✅ zsh-syntax-highlighting is installed${RESET}"
-else
-  message "${GREEN}🏁 Installing zsh-syntax-highlighting${RESET}"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-syntax-highlighting" ||
-    fail "Couldn't install zsh-syntax-highlighting"
-fi
-
-# Install zsh-completions
-if [ -d "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions" ]; then
-  message "${CYAN}✅ zsh-completions is installed${RESET}"
-else
-  message "${GREEN}🏁 Installing zsh-completions${RESET}"
-  git clone https://github.com/zsh-users/zsh-completions.git "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions" ||
-    fail "Couldn't install zsh-completions"
-fi
+for plugin in zsh-autosuggestions zsh-syntax-highlighting zsh-completions; do
+  if [ -d "$PLUGINS_DIR/$plugin" ]; then
+    message "${CYAN}✅ $plugin is installed${RESET}"
+  else
+    message "${GREEN}🏁 Installing $plugin${RESET}"
+    git clone --depth=1 "https://github.com/zsh-users/$plugin.git" "$PLUGINS_DIR/$plugin" ||
+      fail "Couldn't install $plugin"
+  fi
+done
 
 message "${GREEN}✅ Oh My Zsh setup complete!${RESET}"

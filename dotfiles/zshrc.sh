@@ -100,5 +100,8 @@ export NVM_DIR="$HOME/.nvm"
 PATH=~/.console-ninja/.bin:$PATH
 
 # Initialize Starship prompt (put at bottom for compatibility)
-# Initialize the Starship prompt, a customizable and fast prompt for any shell
 eval "$(starship init zsh)"
+
+# Source machine-specific settings
+# Load settings that are not tracked in the repo (e.g. lines added by installers) from ~/.zshrc.local
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

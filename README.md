@@ -4,7 +4,7 @@ This repository provides a project designed to streamline macOS configuration us
 
 By using this project, you can quickly and efficiently configure your macOS environment to meet your preferences and needs.
 
-This project uses [Dotbot](https://github.com/anishathalye/dotbot) for managing dotfiles installation and symlinks, making it easy to bootstrap your configuration on a new machine.
+Everything is plain Bash (the version that ships with macOS), so the setup needs nothing besides git, which comes with the Xcode Command Line Tools that the bootstrap installs.
 
 The setup process involves:
 
@@ -66,14 +66,45 @@ The setup process involves:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gserafim/macos-setup/main/bootstrap.sh)"
 ```
 
+Needs an Apple Silicon Mac (Homebrew no longer installs on Intel Macs).
+
+What to expect:
+
+1. Confirm the Command Line Tools dialog and wait for it to finish (5-20 min).
+2. Type your password and, if a new SSH key is created, its passphrase. macOS may also ask whether Terminal can access the Documents folder.
+3. Homebrew installs everything in one go (30-60+ min) and may ask for the password again for apps that need it.
+4. At the end, confirm the dialog Firefox opens to become the default browser, then open a new terminal.
+
 <br/>
 
-## 📝 Create/Update Brewfile
+## 🔁 Running parts of the setup
 
-This project creates an alias to keep the brew file up to date as applications and tools are installed or removed.
+`install.sh` runs every step by default. Pass step names to run only those (this works from any folder):
 
 ```bash
-brewfile-update
+bash ~/.dotfiles/install.sh links          # re-link the dotfiles (safe to run any time)
+bash ~/.dotfiles/install.sh brew macos     # only Homebrew and the macOS preferences
+```
+
+Steps, in the order they run: `links`, `ssh`, `ohmyzsh`, `fzf-git`, `macos`, `brew`, `apps`. If a step fails, the others still run and the failed ones are listed at the end. Ctrl-C stops everything.
+
+On a Mac that is already set up, run only the steps you need: running all of them again reverts macOS preferences you changed since, restarts the Dock, Finder and menu bar, and overwrites app settings (`install.sh` asks before doing that).
+
+Existing files are never deleted: anything in the way of a link is renamed to `<name>.backup.<date>`.
+
+Machine-specific shell settings (like the lines some installers ask you to add to `~/.zshrc`) go in `~/.zshrc.local`, which is loaded at the end of `.zshrc` and isn't part of the repo.
+
+<br/>
+
+## 📝 Maintaining the Brewfile
+
+`dotfiles/Brewfile` lists the work setup and is curated by hand (personal apps stay out of it). These shell functions edit or check it without rewriting it:
+
+```bash
+brewfile-add jq               # add a formula (new entries go to the end of the file)
+brewfile-add --cask ghostty   # add an app
+brewfile-remove jq            # remove an entry
+brewfile-check                # compare the Brewfile with what is installed (changes nothing)
 ```
 
 <br/>

@@ -1,6 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+export PATH="$HOME/.local/bin:$PATH" # btctl local bin
 export PATH=$PATH:/Applications/Google\ Chrome.app/Contents/MacOS
 export PATH="/opt/homebrew/opt/python@3.11/bin/:$PATH"
 
@@ -21,7 +22,8 @@ export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 #Enable the cleanup of the homebrew installation
-export HOMEBREW_NO_INSTALL_CLEANUP=0
+export HOMEBREW_NO_INSTALL_CLEANUP=
+export HOMEBREW_NO_ENV_HINTS=1
 
 
 #Set the theme for bat
@@ -29,3 +31,7 @@ export BAT_THEME=Dracula
 
 # Set the manpager to bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# Set VS Code as the editor and wait for the file to be closed before returning
+export EDITOR="code --wait"
+export VISUAL="$EDITOR"

@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
-# Source utils
-source "$(dirname "${BASH_SOURCE[0]}")/colors.sh"
-source "$(dirname "${BASH_SOURCE[0]}")/text.sh"
+# Needs colors.sh and text.sh, both loaded by common.sh
 
 generate_header() {
     local text="$1"
     local pattern=""
     local dash="-"
-    local term_width=$(tput cols)
+    local term_width
+    term_width=$(tput cols 2>/dev/null || echo 80)
 
     # Create alternating pattern for the full terminal width
-    for i in $(seq 1 $term_width); do
+    for i in $(seq 1 "$term_width"); do
         if ((i % 2 == 0)); then
             pattern+="${BLACK}${dash}"
         else

@@ -14,22 +14,10 @@ alias lsfa='eza --icons=always -la'
 alias lst='eza --icons=always --tree'
 
 # Set alias to remove node_modules from tokei
-alias tokei="tokei --exclude dotbot --exclude node_modules"
+alias tokei="tokei --exclude node_modules"
+
+# Set alias to use bat instead of cat
+alias cat="bat"
 
 # Restart Bluetooth driver
-alias bt-restart="
-blueutil --power 0 && \
-sleep 1 && \
-blueutil --power 1 &&"
-
-# Search using regex (case insensitive)
-alias search="find . -type f -not -path '*/\.*' -exec grep -iE \"$@\" {} + | sort"
-
-# Updates the Brewfile and removes VSCode
-alias brewfile-update="(OLDPWD=$(pwd) && \
-brew autoremove && \
-brew cleanup && \
-cd ~/.dotfiles/dotfiles && \
-brew bundle dump --force && \
-sed -i '' '/^vscode/d' Brewfile && \
-cd $OLDPWD)"
+alias btr="blueutil --power 0 && sleep 1 && blueutil --power 1"
